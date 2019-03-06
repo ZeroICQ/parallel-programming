@@ -1,4 +1,12 @@
 ---
 ---
-Hellr
-{{site.time}}
+
+
+{% for report in site.reports %}
+  <h2>
+    <a href="{{ report.url }}">
+      {{ report.title }}
+    </a>
+  </h2>
+  <p>{{ report.excerpt }}</p>
+{% endfor %}

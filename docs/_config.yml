@@ -1,5 +1,7 @@
 theme: jekyll-theme-slate
 
+lang: "ru-RU"
+
 collections:
   reports:
     output: true
@@ -10,3 +12,10 @@ defaults:
       path: "" # an empty string here means all files in the project
     values:
       layout: "default"
+
+  -
+    scope:
+      path: ""
+      type: "reports"
+    values:
+      layout: "report"
