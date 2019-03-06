@@ -4,7 +4,7 @@
 
 {% for report in site.reports %}
   <h2>
-    <a href="{{ report.url }}">
+    <a href="{{ site.baseurl }}{{report.url}}">
       {{ report.title }}
     </a>
   </h2>
