@@ -1,6 +1,4 @@
 #include <stdio.h>
-#include <clocale>
-#include <cstdlib>
 #include <omp.h>
 
 #ifdef _WIN32
@@ -8,6 +6,8 @@
 #endif
 
 int main(int argc, char* argv[]) {
-    
+    #ifdef _OPENMP
+        printf("OpenMP is supported!\n");
+    #endif
 
 }
