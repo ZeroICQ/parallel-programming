@@ -1,7 +1,21 @@
 #include <stdio.h>
+#include <omp.h>
+#include <iostream>
+#include <cmath>
 
-int main (int argc, char* argv[])
+#ifdef _WIN32
+#define _OPENMP _OMP_H
+#endif
+
+
+int main(int argc, char *argv[])
 {
-    printf("It works!\n");
+    int count = 0;
+#pragma omp parallel
+    {
+#pragma omp atomic
+        count++;
+    }
+    printf("counter: %d\n", count);
     return 0;
 }
