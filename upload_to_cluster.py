@@ -6,6 +6,8 @@ import tarfile
 import paramiko
 import getpass
 from shutil import rmtree
+import os.path as osp 
+
 
 
 repo_directory = os.path.dirname(os.path.abspath(__file__))
@@ -20,7 +22,17 @@ def eprint(*args):
 # bug: python cannot delete readonly files on windows
 def del_rw(action, name, exc):
     os.chmod(name, stat.S_IWRITE)
-    os.remove(name)
+    # os.unlink(name)
+    action(name)
+
+def remove_readonly(fn, path, excinfo):
+    try:
+        os.chmod(path, stat.S_IWRITE)
+        fn(path)
+    except Exception as exc:
+        print("Skipped:", path, "because:\n", exc)
+
+    
 
 
 def main():
@@ -52,8 +64,8 @@ def main():
 
     with paramiko.SSHClient() as ssh:
         ssh.set_missing_host_key_policy(paramiko.WarningPolicy())
-        password = getpass.getpass()
-        ssh.connect(host, username=username, password=password)
+        # password = getpass.getpass()
+        ssh.connect(host, username=username, key_filename="cluster.ppk")
 
         with ssh.open_sftp() as sftp:
             sftp.put(archive_name, archive_name)
@@ -73,10 +85,34 @@ def main():
                 print(e)
 
 
+def remove_readlonly_attrubite(path):
+    for root, dirs, files in os.walk(path):
+        for fname in files:
+            full_path = os.path.join(root, fname)
+            os.chmod(full_path ,stat.S_IWRITE)
+
+def remove_tree(dirname):
+    """Remove whole directory tree
+    Reimplemented in project explorer widget"""
+    while osp.exists(dirname):
+        try:
+            rmtree(dirname, onerror=del_rw)
+        except Exception as e:
+            # This handles a Windows problem with shutil.rmtree.
+            # See issue #8567.
+            print(e)
+            # if type(e).__name__ == "OSError":
+            #     rmtree(error_path, ignore_errors=True)
+
+
+
 if __name__ == "__main__":
     try:
         main()
     finally:
         # cleanup
-        rmtree(repo_directory + "/" + tmp_repo_name, onerror=del_rw)
+        # remove readonly flag
+        # remove_readlonly_attrubite(repo_directory + "/" + tmp_repo_name)
+        # rmtree(repo_directory + "/" + tmp_repo_name, )
+        remove_tree(repo_directory + "/" + tmp_repo_name)
         os.remove(archive_name)
