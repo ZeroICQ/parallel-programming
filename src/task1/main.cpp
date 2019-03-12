@@ -22,7 +22,7 @@ int main(int argc, char* argv[]) {
         while (last_thread_number != omp_get_thread_num())
             ;
 
-        printf("I am thread numeber %d out of %d\n", omp_get_thread_num() + 1, omp_get_num_threads());
+        printf("I am thread number %d out of %d\n", omp_get_thread_num() + 1, omp_get_num_threads());
         #pragma omp atomic
         last_thread_number--;
 
