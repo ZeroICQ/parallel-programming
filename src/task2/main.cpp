@@ -10,7 +10,7 @@
 void sum_array(int size, int initial_value) {
     std::vector<int> array_to_sum(size, initial_value);
     int sum = 0;
-    printf("Sum without reduction\n");
+    printf("Sum with race conditions\n");
     // result is inconsistent because of race conditions
     #pragma omp parallel for shared(sum)
     for (int i = 0; i < array_to_sum.size(); i++)
@@ -18,7 +18,23 @@ void sum_array(int size, int initial_value) {
 //        #pragma omp atomic
         sum += array_to_sum[i];
 
-    printf("Sum of array without with size %d initialized with %d is %d\n", size, initial_value,sum);
+    printf("Sum of array size %d initialized with %d is %d\n\n", size, initial_value,sum);
+
+    printf("Sum with atomic expression\n");
+    sum = 0;
+    #pragma omp parallel
+    {
+        int local_sum = 0;
+        #pragma omp for
+        for (int i = 0; i < array_to_sum.size(); i++) {
+            local_sum += array_to_sum[i];
+        }
+
+        #pragma atomic
+        sum += local_sum;
+    }
+
+    printf("Sum of array size %d initialized with %d is %d\n\n", size, initial_value,sum);
 
     printf("Sum with reduction\n");
     sum = 0;
@@ -26,7 +42,26 @@ void sum_array(int size, int initial_value) {
     for (int i = 0; i < array_to_sum.size(); i++)
         sum += array_to_sum[i];
 
-    printf("Sum of array with size %d initialized with %d is %d\n", size, initial_value,sum);
+    printf("Sum of array size %d initialized with %d is %d\n\n", size, initial_value,sum);
+
+    printf("Sum with critical section\n");
+    sum = 0;
+    #pragma omp parallel
+    {
+        int local_sum = 0;
+        #pragma omp for
+        for (int i = 0; i < array_to_sum.size(); i++) {
+            local_sum += array_to_sum[i];
+        }
+
+        #pragma omp critical
+        {
+            sum += local_sum;
+        }
+    }
+
+    printf("Sum of array size %d initialized with %d is %d\n\n", size, initial_value,sum);
+
 }
 
 int main(int argc, char* argv[]) {
@@ -60,7 +95,7 @@ int main(int argc, char* argv[]) {
         }
     }
 
-    sum_array(100000 , 1);
+    sum_array(1000000 , 1);
 
     return 0;
 }
