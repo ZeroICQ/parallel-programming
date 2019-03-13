@@ -135,3 +135,70 @@ spongeBobImg.onload = function() {
 
 
 }
+
+
+var SpeedFromThreadsTenThousandsElement = document.getElementById("SpeedFromThreadsTenThousands");
+var SpeedFromThreadsTenThousands = new Chart(SpeedFromThreadsTenThousandsElement, {
+    type: "horizontalBar",
+    options: {
+        title: {
+            display: true,
+            text: "10^4",
+        },
+        legend: {
+            display: false,
+        },
+        scales: {
+            xAxes: [{
+                ticks: {
+                    beginAtZero:true
+                },
+                scaleLabel: {
+                    display: true,
+                    labelString: 'время, сек'
+                }
+            }]
+        }
+    },
+
+    data: {
+        labels: ["1 thread", "2 threads", "3 threads", "4 threads",
+                 "5 threads", "6 threads", "7 threads", "8 threads"],
+         datasets: [{
+            label:"время",
+            data: [
+                0.00006926804780960,
+                0.00009703496471047,
+                0.00007391790859401,
+                0.00005905504804105,
+                0.00005440204404294,
+                0.00005444395355880,
+                0.00004342908505350,
+                0.00004507601261139
+            ],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(0, 120, 51, 0.2)',
+                'rgba(255, 153, 255, 0.2)',
+            ],
+            borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(0, 120, 51, 1)',
+                'rgba(255, 153, 255, 1)',
+            ],
+            borderWidth: 1
+
+         }]
+    },
+
+});
