@@ -18,7 +18,7 @@ void dot_production(const intvector& vector_a, const intvector& vector_b) {
         {
             #pragma omp single
             {
-                printf("current threads is %d\n", omp_get_num_threads());
+                printf("current threads number is %d\n", omp_get_num_threads());
             }
             long long local_dot_production = 0;
             #pragma omp for
