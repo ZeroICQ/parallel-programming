@@ -202,3 +202,189 @@ var SpeedFromThreadsTenThousands = new Chart(SpeedFromThreadsTenThousandsElement
     },
 
 });
+
+
+var size1el = document.getElementById("size1");
+var size1 = new Chart(size1el, {
+    type: "horizontalBar",
+    options: {
+        title: {
+            display: true,
+            text: "8 threads",
+        },
+        legend: {
+            display: false,
+        },
+        scales: {
+            xAxes: [{
+                ticks: {
+                    beginAtZero:false
+                },
+                scaleLabel: {
+                    display: true,
+                    labelString: 'время, сек'
+                }
+            }]
+        }
+    },
+
+    data: {
+        labels: ["10^8", "5*10^7", "2.5*10^7", "1.25*10^7"],
+         datasets: [{
+            label:"время",
+            data: [
+                0.13104884896893054,
+                0.06587930198293179,
+                0.03316070802975446,
+                0.01680788293015212,
+            ],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(0, 120, 51, 0.2)',
+                'rgba(255, 153, 255, 0.2)',
+            ],
+            borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(0, 120, 51, 1)',
+                'rgba(255, 153, 255, 1)',
+            ],
+            borderWidth: 1
+
+         }]
+    },
+
+});
+
+var size2el = document.getElementById("size2");
+var size2 = new Chart(size2el, {
+    type: "horizontalBar",
+    options: {
+        title: {
+            display: true,
+            text: "4 threads",
+        },
+        legend: {
+            display: false,
+        },
+        scales: {
+            xAxes: [{
+                ticks: {
+                    beginAtZero:false
+                },
+                scaleLabel: {
+                    display: true,
+                    labelString: 'время, сек'
+                }
+            }]
+        }
+    },
+
+    data: {
+        labels: ["10^8", "5*10^7", "2.5*10^7", "1.25*10^7"],
+         datasets: [{
+            label:"время",
+            data: [
+                0.13197195192333311,
+                0.06609878607559949,
+                0.03340936300810426,
+                0.01710182300303131
+
+            ],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(0, 120, 51, 0.2)',
+                'rgba(255, 153, 255, 0.2)',
+            ],
+            borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(0, 120, 51, 1)',
+                'rgba(255, 153, 255, 1)',
+            ],
+            borderWidth: 1
+
+         }]
+    },
+
+});
+
+
+var size3el = document.getElementById("size3");
+var size3 = new Chart(size3el, {
+    type: "horizontalBar",
+    options: {
+        title: {
+            display: true,
+            text: "4 threads",
+        },
+        legend: {
+            display: false,
+        },
+        scales: {
+            xAxes: [{
+                ticks: {
+                    beginAtZero:false
+                },
+                scaleLabel: {
+                    display: true,
+                    labelString: 'время, сек'
+                }
+            }]
+        }
+    },
+
+    data: {
+        labels: ["10^8", "5*10^7", "2.5*10^7", "1.25*10^7"],
+         datasets: [{
+            label:"время",
+            data: [
+                0.15484936302527785,
+                0.07939250092022121,
+                0.03906829096376896,
+                0.01983976294286549
+            ],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(0, 120, 51, 0.2)',
+                'rgba(255, 153, 255, 0.2)',
+            ],
+            borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(0, 120, 51, 1)',
+                'rgba(255, 153, 255, 1)',
+            ],
+            borderWidth: 1
+
+         }]
+    },
+
+});

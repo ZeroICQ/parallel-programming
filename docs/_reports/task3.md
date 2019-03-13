@@ -14,3 +14,11 @@ jsarr:
 
 Длина вектора 10^4
 <canvas id="SpeedFromThreadsTenThousands" width="400" height="400"></canvas>
+
+# Зависимость времени выполнения от размера вектора.
+Количеcтво тредов = 8
+<canvas id="size1" width="400" height="400"></canvas>
+Количеcтво тредов = 4
+<canvas id="size2" width="400" height="400"></canvas>
+Количеcтво тредов = 2
+<canvas id="size3" width="400" height="400"></canvas>
