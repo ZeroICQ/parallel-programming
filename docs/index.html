@@ -1,8 +1,11 @@
 ---
 ---
 
-
-{% for report in site.reports %}
+{% assign sorted = (site.reports | sort: "title") %}
+{% for report in sorted %}
+ {% if report.hide %}
+     {% continue %}
+ {% endif %}
   <h2>
     <a href="{{ site.baseurl }}{{ report.url }}">
       {{ report.title }}

@@ -1,4 +1,5 @@
 ---
+hide: true
 jsarr:
     - /js/test.js
 ---
