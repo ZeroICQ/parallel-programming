@@ -39,9 +39,6 @@ void multiply_matrices(const matrix& matrix_a, const matrix& matrix_b) {
         auto end = omp_get_wtime();
         printf("Elapsed time %.17lf. Threads number %d\n", end-start, threads_number);
     }
-
-
-
 }
 
 int main(int argc, char* argv[]) {

@@ -25,7 +25,6 @@ void find_max(const intvector& vec) {
 
         printf("Elapsed time is %.17lf.maximum is %d. %d threads.\n", end-start, max_elem, threads_number);
     }
-
 }
 
 int main(int argc, char* argv[]) {
