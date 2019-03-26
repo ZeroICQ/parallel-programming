@@ -1,3 +1,6 @@
 find_package(MPI REQUIRED)
-#include_directories(main ${MPI_INCLUDE_PATH})
-#target_link_libraries(main ${MPI_C_LIBRARIES})
+
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/CMakeModules)
+
+include(SetupMpi)
+add_subdirectory(task1_mpi)
