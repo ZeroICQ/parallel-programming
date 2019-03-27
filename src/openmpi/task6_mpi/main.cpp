@@ -28,7 +28,7 @@ void dot_production(const intvector& vector_a, const intvector& vector_b, int ra
 
     int result = 0;
     MPI_Barrier(MPI_COMM_WORLD);
-    MPI_Reduce(&local_sum, &result, processors, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);
+    MPI_Reduce(&local_sum, &result, 1, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);
     if (rank == 0)
         cout << result << endl;
 
@@ -43,7 +43,6 @@ int main(int argc, char **argv)
     MPI_Comm_size(MPI_COMM_WORLD, &size);
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
-//    int vector_size = 20000000;
     int vector_size = 20000000;
 
     std::vector<int>vector_a(vector_size, 1);
