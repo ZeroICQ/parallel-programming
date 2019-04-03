@@ -12,7 +12,7 @@ void dot_production(const intvector& vector_a, const intvector& vector_b, int ra
     auto last_chunk_size = vec_size - (processors - 1)*chunk_size;
 
     auto start_index = rank * chunk_size;
-    auto after_last_index = start_index + chunk_size;
+        auto after_last_index = start_index + chunk_size;
     auto local_sum = 0;
 
     if (rank != processors - 1) {
@@ -27,7 +27,7 @@ void dot_production(const intvector& vector_a, const intvector& vector_b, int ra
     }
 
     int result = 0;
-    MPI_Barrier(MPI_COMM_WORLD);
+//    MPI_Barrier(MPI_COMM_WORLD);
     MPI_Reduce(&local_sum, &result, 1, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);
     if (rank == 0)
         cout << result << endl;
