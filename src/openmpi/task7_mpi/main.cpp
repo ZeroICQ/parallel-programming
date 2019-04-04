@@ -25,6 +25,7 @@ void bandwidth(int length, int rank) {
     if (rank == 0) {
         auto sizeInMB = length / (1024 * 1024);
         cout << "length: " << sizeInMB << " elapsed time: " << elapsed_time/N << endl;
+        cout << "bandwidth: " << 2*N*(sizeInMB/elapsed_time) << endl;
     }
 
     delete[] message;

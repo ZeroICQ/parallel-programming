@@ -8,6 +8,6 @@ jsarr:
 # Пропускная способность
 Длина вектора 10^8
 
+<canvas id="time" width="400" height="400"></canvas>
 <canvas id="bandwidth" width="400" height="400"></canvas>
-
 
