@@ -5,7 +5,7 @@
 using namespace std;
 
 void latency(int rank) {
-    auto N = 10000;
+    auto N = 1000000;
     char message;
     double elapsed_time = 0;
 
