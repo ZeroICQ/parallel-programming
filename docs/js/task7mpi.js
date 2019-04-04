@@ -88,13 +88,13 @@ var bandwidth = new Chart(bandwidthelement, {
     data: {
         labels: ["800 MB", "400 MB", "200 MB", "100 MB", "50 MB"],
          datasets: [{
-            label:"время",
+            label:"bandwidth, MB/s",
             data: [
-                14.2662,
-                7.13493,
-                3.5707,
-                1.7869,
-                0.8930
+                112.177,
+                112.144,
+                112.053,
+                111.921,
+                112.022
             ],
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
