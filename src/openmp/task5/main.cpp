@@ -28,7 +28,7 @@ void multiply_matrices(const matrix& matrix_a, const matrix& matrix_b) {
         auto start = omp_get_wtime();
         #pragma omp parallel for num_threads(threads_number)
         for (auto i = 0; i < n; i++) {
-            #pragma omp parallel for num_threads(threads_number)
+            //#pragma omp parallel for num_threads(threads_number)
             for (auto j = 0; j < n; j++) {
                 for (auto k = 0; k < n; k++) {
                     result[i][j] = matrix_a[i][k] * matrix_b[k][j];
