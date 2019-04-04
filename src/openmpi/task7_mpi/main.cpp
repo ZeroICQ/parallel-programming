@@ -23,7 +23,8 @@ void bandwidth(int length, int rank) {
     }
 
     if (rank == 0) {
-        cout << elapsed_time/N << endl;
+        auto sizeInMB = length / (1024 * 1024);
+        cout << "length: " << sizeInMB << " elapsed time: " << elapsed_time/N << endl;
     }
 
     delete[] message;
@@ -36,7 +37,12 @@ int main(int argc, char **argv)
     int rank, size;
 //    MPI_Comm_size(MPI_COMM_WORLD, &size);
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-    bandwidth(1024*1024*800, rank);
+    vector<int> sizes = {800, 400, 200, 100, 50};
+
+    for (const auto s : sizes) {
+        bandwidth(1024*1024*s, rank);
+
+    }
 
     MPI_Finalize();
     return EXIT_SUCCESS;
