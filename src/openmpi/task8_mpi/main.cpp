@@ -8,12 +8,12 @@ void vecSum(int rank, int commSize, const vector<int>& vec) {
     auto leftChild  = 2*rank + 1;
     auto rightChild = 2*rank + 2;
 
-    int* arr;
-
     if (rank == 0) {
         auto vecPointer = vec.data();
         auto leftSize = vec.size() / 2;
         auto rightSize = vec.size() - leftSize;
+
+        auto start_time = MPI_Wtime();
 
         MPI_Send(vecPointer, leftSize, MPI_INT, leftChild, 0, MPI_COMM_WORLD);
         MPI_Send(vecPointer + leftSize, rightSize, MPI_INT, rightChild, 0, MPI_COMM_WORLD);
@@ -21,24 +21,52 @@ void vecSum(int rank, int commSize, const vector<int>& vec) {
         int sumL, sumR;
         MPI_Recv(&sumL, 1, MPI_INT, leftChild,  MPI_ANY_TAG, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
         MPI_Recv(&sumR, 1, MPI_INT, rightChild, MPI_ANY_TAG, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-        cout << sumL + sumR << end;
+        cout << "size time elapsed: " << MPI_Wtime() - start_time << " for size " << vec.size() << endl;
+        cout << sumL + sumR << endl;
     }
     else {
-        MPI_Recv()
-    }
+        MPI_Status status;
+        MPI_Probe(MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
 
-    if (leftChild < commSize) {
+        int count;
+        MPI_Get_count(&status, MPI_INT, &count);
+        auto arr = new int[count];
 
-    }
-    else {
+        MPI_Recv(arr, count, MPI_INT, MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
 
-    }
+        auto leftSize = count / 2;
+        auto rightSize = count - leftSize;
 
-    if (rightChild < commSize) {
+        auto hasLeftChild = leftChild < commSize;
+        auto hasRightChild = rightChild < commSize;
 
-    }
-    else {
+        int sumL = 0, sumR = 0;
 
+        if (hasLeftChild) {
+            MPI_Send(arr, leftSize, MPI_INT, leftChild, 0, MPI_COMM_WORLD);
+            MPI_Recv(&sumL, 1, MPI_INT, leftChild,  MPI_ANY_TAG, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+        }
+        else {
+            for (int i = 0; i < leftSize; i++) {
+                sumL += arr[i];
+            }
+        }
+
+        if (hasRightChild) {
+            MPI_Send(arr+ leftSize, rightSize, MPI_INT, rightChild, 0, MPI_COMM_WORLD);
+            MPI_Recv(&sumR, 1, MPI_INT, rightChild, MPI_ANY_TAG, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+        }
+        else {
+            for (int i = leftSize; i < count; i++) {
+                sumR += arr[i];
+            }
+        }
+
+        auto sum = sumL + sumR;
+
+        MPI_Send(&sum, 1, MPI_INT, status.MPI_SOURCE, 0, MPI_COMM_WORLD);
+
+        delete[] arr;
     }
 }
 
@@ -50,19 +78,11 @@ int main(int argc, char **argv)
     MPI_Comm_size(MPI_COMM_WORLD, &size);
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
-    int vector_size = 10000;
+    int vector_size = 100000000;
 
-    vector<int>vec/(vector_size, 1);
+    vector<int>vec(vector_size, 1);
 
-//    double start_time;
-//    if (rank == 0) {
-//        start_time = MPI_Wtime();
-//    }
-
-    vecSum(vector_a, vector_b, rank, size);
-//    if (rank == 0) {
-//        cout << "Time elapsed: " << MPI_Wtime() - start_time << endl;
-//    }
+    vecSum(rank, size, vec);
 
     MPI_Finalize();
 
