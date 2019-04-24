@@ -1,6 +1,6 @@
-#include <iostream>
 #include <mpi.h>
 #include <vector>
+#include <iostream>
 
 using namespace std;
 
