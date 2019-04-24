@@ -26,6 +26,7 @@ int main(int argc, char **argv) {
 
     MPI_File_open(MPI_COMM_WORLD, "file.txt", MPI_MODE_RDONLY, MPI_INFO_NULL, &fh);
     //https://www.opennet.ru/docs/RUS/mpi-2/node175.html
+    https://www.open-mpi.org/doc/v3.0/man3/MPI_File_set_view.3.php
     MPI_File_set_view(fh, 0, MPI_CHAR, MPI_CHAR, "native", MPI_INFO_NULL);
     sum = 0;
     do{
