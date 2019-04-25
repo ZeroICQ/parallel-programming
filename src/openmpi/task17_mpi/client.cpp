@@ -2,11 +2,11 @@
 #include <iostream>
 #include <cstring>
 using namespace std;
-
+char port_name[MPI_MAX_PORT_NAME];
 int main(int argc, char **argv) {
     int rank;
     MPI_Init(&argc, &argv);
-    char port_name[MPI_MAX_PORT_NAME];
+
 
     MPI_Comm intercomm;
     MPI_File  fh;
@@ -15,12 +15,15 @@ int main(int argc, char **argv) {
     MPI_File_set_view(fh, 0, MPI_CHAR, MPI_CHAR, "native", MPI_INFO_NULL);
     MPI_File_read(fh, port_name, MPI_MAX_PORT_NAME, MPI_CHAR, MPI_STATUS_IGNORE);
 
-//    strcpy(port_name, argv[1]);
+    string message;
+    cout << "portname: " << port_name << endl;
+    cout << "Please write message: " << endl;
+    getline(cin, message);
+//    cin >> message;
 
     MPI_Comm_connect(port_name, MPI_INFO_NULL, 0, MPI_COMM_SELF, &intercomm);
 //    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-    rank = 10;
-    MPI_Send(&rank, 1, MPI_INT, 0, 0, intercomm);
+    MPI_Send(message.data(), message.size(), MPI_CHAR, 0, 0, intercomm);
 
     MPI_Finalize();
     return EXIT_SUCCESS;
