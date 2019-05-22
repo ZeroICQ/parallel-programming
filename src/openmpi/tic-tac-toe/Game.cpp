@@ -1,13 +1,13 @@
 #include <ncurses.h>
-#include "GameBoard.h"
+#include "Game.h"
 
-GameBoard::GameBoard() {
+Game::Game() {
     initscr();			/* Start curses mode 		  */
     printw("Hello World !!!");	/* Print Hello World		  */
     refresh();			/* Print it on to the real screen */
     getch();			/* Wait for user input */
 }
 
-GameBoard::~GameBoard() {
+Game::~Game() {
     endwin();
 }

@@ -1,7 +1,7 @@
 #include <mpi.h>
 #include <cstdlib>
 #include <iostream>
-#include "GameBoard.h"
+#include "Game.h"
 
 using namespace std;
 
@@ -9,7 +9,7 @@ using namespace std;
 //char port_name[MPI_MAX_PORT_NAME];
 
 int main(int argc, char* argv[]) {
-    GameBoard gameBoard;
+    Game game;
     return EXIT_SUCCESS;
 
 //    MPI_Init(&argc, &argv);
