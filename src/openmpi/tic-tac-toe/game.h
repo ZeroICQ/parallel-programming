@@ -2,9 +2,11 @@
 
 #include <ncurses.h>
 #include <iostream>
+#include <memory>
 #include "screens.h"
 
 namespace ttt {
+
 class Game {
 public:
     Game();
@@ -15,7 +17,7 @@ public:
 
 private:
     bool isExit_ = false;
-    BaseScreen
+    std::shared_ptr<ttt::BaseScreen> curScreen_;
 };
 
 } // namespace ttt

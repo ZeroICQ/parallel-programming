@@ -9,7 +9,7 @@ using namespace std;
 //char port_name[MPI_MAX_PORT_NAME];
 
 int main(int argc, char* argv[]) {
-    Game game;
+    ttt::Game game;
 
     while (!game.isExit())
         game.tick(getch());
