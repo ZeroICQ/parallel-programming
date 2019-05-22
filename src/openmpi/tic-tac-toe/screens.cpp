@@ -16,6 +16,11 @@ void ttt::MainMenuScreen::handleInput(int key, bool forceDraw) {
             advanceChoice();
             break;
 
+        case KEY_ENTER:
+        case 10:
+            changeScreen();
+            break;
+
         default:
             break;
     }
@@ -61,12 +66,71 @@ void ttt::MainMenuScreen::draw() {
 
     int c = 0;
     for (auto& choicesString : choicesStrings_) {
+
         if (c == currChoice_)
             attron(A_STANDOUT);
         else
             attroff(A_STANDOUT);
+
         mvprintw(yStartDraw, xStartDraw, choicesString.second.c_str());
         yStartDraw++;
         c++;
     }
+}
+
+void ttt::MainMenuScreen::changeScreen() {
+    switch (currChoice_) {
+        case START_VS_HUMAN_SERVER:
+            changeScreen_ = new ServerScreen();
+            break;
+
+        case EXIT:
+            isRequestExit_ = true;
+            break;
+
+        default:
+            break;
+    }
+}
+
+void ttt::ServerScreen::handleInput(int key, bool forceDraw) {
+    if (key == ERR && !forceDraw)
+        return;
+
+    switch (key) {
+        case 'w':
+        case KEY_UP:
+            gameBoard.moveCursorVertical(-1);
+            break;
+
+        case 'd':
+        case KEY_RIGHT:
+            gameBoard.moveCursorHorizontal(1);
+            break;
+
+        case 's':
+        case KEY_DOWN:
+            gameBoard.moveCursorVertical(1);
+            break;
+
+        case 'a':
+        case KEY_LEFT:
+            gameBoard.moveCursorHorizontal(-1);
+            break;
+
+        case KEY_ENTER:
+        case 10:
+            break;
+
+        default:
+            break;
+    }
+
+    clear();
+    gameBoard.draw();
+}
+
+ttt::ServerScreen::ServerScreen() : BaseScreen() {
+    currentPlayer_ = static_cast<Player>(rand() % 2);
+
 }
