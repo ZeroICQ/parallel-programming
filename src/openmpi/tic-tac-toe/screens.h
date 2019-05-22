@@ -3,6 +3,8 @@
 #include <ncurses.h>
 #include <map>
 #include "game_board.h"
+#include <mpi.h>
+#include <vector>
 
 namespace ttt {
 
@@ -54,7 +56,15 @@ private:
 
 enum class Player { PLAYER_SERVER, PLAYER_CLIENT, PLAYER_BOT};
 
-class ServerScreen : public BaseScreen {
+class HumanScreen : public BaseScreen {
+protected:
+    char port_name[MPI_MAX_PORT_NAME];
+    bool isConnected = false;
+    GameBoard gameBoard_;
+    void printMessages(const std::vector<std::string>& messages);
+};
+
+class ServerScreen : public HumanScreen {
 public:
     ServerScreen();
     GameScreen getScreenType() const override { return GameScreen::GAME_SERVER; }
@@ -62,9 +72,16 @@ public:
     void handleInput(int key, bool forceDraw) override;
 
 private:
-    GameBoard gameBoard;
+
     Player currentPlayer_;
 
+};
+
+class ClientScreen : public HumanScreen {
+public:
+    GameScreen getScreenType() const override { return GameScreen::GAME_CLIENT; }
+
+    void handleInput(int key, bool forceDraw) override;
 };
 
 } //namespace tt

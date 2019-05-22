@@ -1,3 +1,4 @@
+#include <vector>
 #include "screens.h"
 
 
@@ -84,6 +85,10 @@ void ttt::MainMenuScreen::changeScreen() {
             changeScreen_ = new ServerScreen();
             break;
 
+        case START_VS_HUMAN_CLIENT:
+            changeScreen_ = new ClientScreen();
+            break;
+
         case EXIT:
             isRequestExit_ = true;
             break;
@@ -97,25 +102,30 @@ void ttt::ServerScreen::handleInput(int key, bool forceDraw) {
     if (key == ERR && !forceDraw)
         return;
 
+    if (!isConnected) {
+        printMessages({"waiting for client to connect", (std::string) port_name});
+        return;
+    }
+
     switch (key) {
         case 'w':
         case KEY_UP:
-            gameBoard.moveCursorVertical(-1);
+            gameBoard_.moveCursorVertical(-1);
             break;
 
         case 'd':
         case KEY_RIGHT:
-            gameBoard.moveCursorHorizontal(1);
+            gameBoard_.moveCursorHorizontal(1);
             break;
 
         case 's':
         case KEY_DOWN:
-            gameBoard.moveCursorVertical(1);
+            gameBoard_.moveCursorVertical(1);
             break;
 
         case 'a':
         case KEY_LEFT:
-            gameBoard.moveCursorHorizontal(-1);
+            gameBoard_.moveCursorHorizontal(-1);
             break;
 
         case KEY_ENTER:
@@ -127,10 +137,85 @@ void ttt::ServerScreen::handleInput(int key, bool forceDraw) {
     }
 
     clear();
-    gameBoard.draw();
+    gameBoard_.draw();
 }
 
-ttt::ServerScreen::ServerScreen() : BaseScreen() {
+ttt::ServerScreen::ServerScreen() : HumanScreen() {
     currentPlayer_ = static_cast<Player>(rand() % 2);
+    MPI_Open_port(MPI_INFO_NULL, port_name);
 
+}
+
+void ttt::HumanScreen::printMessages(const std::vector<std::string> &messages) {
+    clear();
+
+    int y, x;
+    getmaxyx(stdscr, y, x);
+    auto yCenter = y / 2;
+    auto xCenter = x / 2;
+
+    size_t maxMessageLength = 0;
+    for (auto& message : messages) {
+        maxMessageLength = std::max(maxMessageLength, message.length());
+    }
+
+    auto yStartDraw = yCenter - messages.size() / 2;
+    auto xStartDraw = xCenter - maxMessageLength / 2;
+
+    for (auto& message : messages) {
+        mvprintw(yStartDraw, xStartDraw, message.c_str());
+        yStartDraw++;
+    }
+
+}
+
+void ttt::ClientScreen::handleInput(int key, bool forceDraw) {
+    if (key == ERR && !forceDraw)
+        return;
+
+    if (!isConnected) {
+        printMessages({"Port:", ""});
+        echo();
+        curs_set(1);
+        nocbreak();
+
+        getstr(port_name);
+
+        noecho();
+        curs_set(0);
+        halfdelay(1);
+        return;
+    }
+
+    switch (key) {
+        case 'w':
+        case KEY_UP:
+            gameBoard_.moveCursorVertical(-1);
+            break;
+
+        case 'd':
+        case KEY_RIGHT:
+            gameBoard_.moveCursorHorizontal(1);
+            break;
+
+        case 's':
+        case KEY_DOWN:
+            gameBoard_.moveCursorVertical(1);
+            break;
+
+        case 'a':
+        case KEY_LEFT:
+            gameBoard_.moveCursorHorizontal(-1);
+            break;
+
+        case KEY_ENTER:
+        case 10:
+            break;
+
+        default:
+            break;
+    }
+
+    clear();
+    gameBoard_.draw();
 }

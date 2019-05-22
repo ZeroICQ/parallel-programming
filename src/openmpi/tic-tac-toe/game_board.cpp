@@ -6,7 +6,6 @@ ttt::GameBoard::GameBoard() {
         for (auto x = 0; x < 3; x++)
             cells_[y][x] = Tag::EMPTY;
 
-
 }
 
 void ttt::GameBoard::draw() {

@@ -9,11 +9,14 @@ using namespace std;
 //char port_name[MPI_MAX_PORT_NAME];
 
 int main(int argc, char* argv[]) {
+    MPI_Init(&argc, &argv);
+
     ttt::Game game;
 
     while (!game.isExit())
         game.tick(getch());
 
+    MPI_Finalize();
     return EXIT_SUCCESS;
 
 //    MPI_Init(&argc, &argv);
