@@ -1,7 +1,7 @@
 #include <mpi.h>
 #include <cstdlib>
 #include <iostream>
-#include "Game.h"
+#include "game.h"
 
 using namespace std;
 
@@ -10,6 +10,10 @@ using namespace std;
 
 int main(int argc, char* argv[]) {
     Game game;
+
+    while (!game.isExit())
+        game.tick(getch());
+
     return EXIT_SUCCESS;
 
 //    MPI_Init(&argc, &argv);
