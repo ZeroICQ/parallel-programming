@@ -104,6 +104,10 @@ void ttt::ServerScreen::handleInput(int key, bool forceDraw) {
 
     if (!isConnected) {
         printMessages({"waiting for client to connect", (std::string) port_name});
+        refresh();
+        // wait for client to connect.
+        MPI_Comm_accept(port_name, MPI_INFO_NULL, 0, MPI_COMM_SELF, &intercomm);
+        printw("client connected");
         return;
     }
 
@@ -184,6 +188,11 @@ void ttt::ClientScreen::handleInput(int key, bool forceDraw) {
         noecho();
         curs_set(0);
         halfdelay(1);
+
+        MPI_Comm_connect(port_name, MPI_INFO_NULL, 0, MPI_COMM_SELF, &intercomm);
+        int message = 1;
+        MPI_Send(&message, 1, MPI_INT, 0, 0, intercomm);
+
         return;
     }
 

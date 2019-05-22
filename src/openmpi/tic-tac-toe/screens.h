@@ -62,6 +62,7 @@ protected:
     bool isConnected = false;
     GameBoard gameBoard_;
     void printMessages(const std::vector<std::string>& messages);
+    MPI_Comm intercomm;
 };
 
 class ServerScreen : public HumanScreen {
@@ -72,7 +73,6 @@ public:
     void handleInput(int key, bool forceDraw) override;
 
 private:
-
     Player currentPlayer_;
 
 };
