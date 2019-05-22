@@ -11,7 +11,6 @@ int main(int argc, char **argv) {
     MPI_Init(&argc, &argv);
 
 
-
     MPI_Status status;
     MPI_Comm intercomm;
     MPI_Open_port(MPI_INFO_NULL, port_name);
